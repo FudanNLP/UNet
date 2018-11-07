@@ -4,10 +4,8 @@ Implementation of paper [U-Net: Machine Reading Comprehension with Unanswerable 
 
 ## Requirements
 
-"""
-pytorh 0.4
-anaconda3 for python 3.6
-"""
+    pytorh 0.4
+    anaconda3 for python 3.6
 
 ## For SQuAD2.0
 

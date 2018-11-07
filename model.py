@@ -199,9 +199,9 @@ class UNet(nn.Module):
         if self.opts['multi_point']:
             self.pointer_layer_p = PointerNet(input_size=2 * hidden_size, opt=self.opts, use_cuda=self.use_cuda)
         if self.opts['check_answer']:
-            self.has_ans = nn.Sequential(nn.Dropout(p=dropout), nn.Linear(8*hidden_size, 2))
+            self.has_ans = nn.Sequential(nn.Dropout(p=dropout), nn.Linear(6*hidden_size, 2))
         else:
-            self.has_ans = nn.Sequential(nn.Dropout(p=dropout), nn.Linear(8*hidden_size, 2))
+            self.has_ans = nn.Sequential(nn.Dropout(p=dropout), nn.Linear(6*hidden_size, 2))
 
     def reset_parameters(self) :
         if not self.fix_embeddings :
@@ -495,18 +495,19 @@ class UNet(nn.Module):
             p_avg2 = torch.bmm(alpha2.unsqueeze(1), und_passage_states).squeeze(1)
             p_avg = p_avg1 + p_avg2
 
-            alpha1_p = F.softmax(logits1_p, dim=1)
-            alpha2_p = F.softmax(logits2_p, dim=1)
+            # alpha1_p = F.softmax(logits1_p, dim=1)
+            # alpha2_p = F.softmax(logits2_p, dim=1)
 
-            p_avg1_p = torch.bmm(alpha1_p.unsqueeze(1), und_passage_states).squeeze(1)
-            p_avg2_p = torch.bmm(alpha2_p.unsqueeze(1), und_passage_states).squeeze(1)
-            p_avg_p = p_avg1_p + p_avg2_p
+            # p_avg1_p = torch.bmm(alpha1_p.unsqueeze(1), und_passage_states).squeeze(1)
+            # p_avg2_p = torch.bmm(alpha2_p.unsqueeze(1), und_passage_states).squeeze(1)
+            # p_avg_p = p_avg1_p + p_avg2_p
 
             q_summ = self.summ_layer2(und_ques_states, q_mask[:, :-1], self.training)
 
             first_word = und_passage_states[:, 0, :]
 
-            has_inp = torch.cat([p_avg, first_word, q_summ, p_avg_p], -1)
+            # has_inp = torch.cat([p_avg, first_word, q_summ, p_avg_p], -1)
+            has_inp = torch.cat([p_avg, first_word, q_summ], -1)
             has_log = self.has_ans(has_inp)
         return logits1, logits2, has_log, logits1_p, logits2_p
 

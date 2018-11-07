@@ -3,7 +3,7 @@
 # File              : prepro.py
 # Author            : Sun Fu <cstsunfu@gmail.com>
 # Date              : 23.06.2018
-# Last Modified Date: 10.09.2018
+# Last Modified Date: 07.11.2018
 # Last Modified By  : Sun Fu <cstsunfu@gmail.com>
 import random
 import ujson as json
@@ -16,7 +16,7 @@ import os
 from tqdm import tqdm
 from collections import Counter
 
-random.seed(1023)
+# random.seed(1023)
 nlp = spacy.load("en", parser=False)
 
 
